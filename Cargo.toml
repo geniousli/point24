@@ -1,0 +1,6 @@
+[package]
+name = "point24"
+version = "0.1.0"
+authors = ["shaohua.li <wildimagine@qq.com>"]
+
+[dependencies]
