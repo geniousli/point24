@@ -2,6 +2,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::mem::drop;
 use std::rc::Rc;
+use std::rc::Weak;
 use std::str::FromStr;
 use std::{thread, time};
 fn main() {
@@ -26,9 +27,9 @@ fn main() {
         lru.put(i, i);
     }
 
-    // for i in 0..1000000 {
-    //     lru.put(i, i);
-    // }
+    for i in 0..100 {
+        lru.put(i, i);
+    }
 
     // let ten_millis = time::Duration::from_millis(1000);
     // for i in 2..10 {
@@ -37,6 +38,43 @@ fn main() {
     //     // thread::sleep(ten_millis);
     lru.print();
     // }
+    // let mut one = Rc::new(RefCell::new(Box::new(LinkNode {
+    //     key: 1,
+    //     val: 1,
+    //     next: None,
+    //     pre: None,
+    // })));
+
+    // {
+    //     let mut two = Rc::new(RefCell::new(Box::new(LinkNode {
+    //         key: 2,
+    //         val: 2,
+    //         next: None,
+    //         pre: None,
+    //     })));
+    //     println!(
+    //         "one strong_count: {}, two string_count: {}",
+    //         Rc::strong_count(&one),
+    //         Rc::strong_count(&two),
+    //     );
+    //     one.borrow_mut().next = Some(Rc::downgrade(&two));
+    //     two.borrow_mut().pre = Some(Rc::clone(&one));
+
+    //     println!(
+    //         "one strong_count: {}, two string_count: {}",
+    //         Rc::strong_count(&one),
+    //         Rc::strong_count(&two),
+    //     );
+    //     // two.borrow_mut().pre = None;
+    //     one.borrow_mut().next = None;
+    //     println!(
+    //         "one strong_count: {}, two string_count: {}",
+    //         Rc::strong_count(&one),
+    //         Rc::strong_count(&two),
+    //     );
+    // }
+    // println!("one strong_count: {}", Rc::strong_count(&one),);
+    // println!("-------------------");
 }
 
 // fn point_24(ary: Vec<i64>, seq: Vec<String>) -> bool {
@@ -115,14 +153,14 @@ struct LinkNode {
     val: i64,
     key: i64,
     next: Option<Rc<RefCell<Box<LinkNode>>>>,
-    pre: Option<Rc<RefCell<Box<LinkNode>>>>,
+    pre: Option<Weak<RefCell<Box<LinkNode>>>>,
 }
 
-// impl Drop for LinkNode {
-//     fn drop(&mut self) {
-//         println!("drop ed {:?}", self.val);
-//     }
-// }
+impl Drop for LinkNode {
+    fn drop(&mut self) {
+        println!("drop ed {:?}", self.val);
+    }
+}
 
 #[derive(Debug)]
 struct LruCache {
@@ -130,7 +168,7 @@ struct LruCache {
     tail: Option<Rc<RefCell<Box<LinkNode>>>>,
     cache: HashMap<i64, Rc<RefCell<Box<LinkNode>>>>,
     cap: i64,
-    ref_ary: Vec<Rc<RefCell<Box<LinkNode>>>>,
+    // ref_ary: Vec<Rc<RefCell<Box<LinkNode>>>>,
 }
 
 impl LruCache {
@@ -140,7 +178,7 @@ impl LruCache {
             tail: None,
             cache: HashMap::new(),
             cap: cap,
-            ref_ary: Vec::new(),
+            // ref_ary: Vec::new(),
         }
     }
 
@@ -154,9 +192,9 @@ impl LruCache {
                     next: None,
                     pre: None,
                 })));
-                self.ref_ary.push(Rc::clone(&node));
+                // self.ref_ary.push(Rc::clone(&node));
                 if let Some(ref head_rc) = self.head {
-                    head_rc.borrow_mut().pre = Some(Rc::clone(&node));
+                    head_rc.borrow_mut().pre = Some(Rc::downgrade(&node));
                     node.borrow_mut().next = Some(Rc::clone(&head_rc));
                 }
                 self.head = Some(Rc::clone(&node));
@@ -169,12 +207,13 @@ impl LruCache {
                     let mut last_tail = None;
                     if let Some(ref tail_rc) = self.tail {
                         if let Some(ref pre_tail_rc) = tail_rc.borrow_mut().pre {
-                            pre_tail_rc.borrow_mut().next = None;
-                            last_tail = Some(Rc::clone(&pre_tail_rc));
+                            if let Some(i_pre_tail_rc) = pre_tail_rc.upgrade() {
+                                i_pre_tail_rc.borrow_mut().next = None;
+                                last_tail = Some(Rc::clone(&i_pre_tail_rc));
+                            }
                         }
                         tail_rc.borrow_mut().next = None;
                         tail_rc.borrow_mut().pre = None;
-                        Rc::downgrade(&tail_rc);
                         drop(tail_rc);
                         self.cache.remove(&tail_rc.borrow_mut().val);
                     }
@@ -195,9 +234,11 @@ impl LruCache {
                             if Rc::ptr_eq(&tail_rc, curr_rc) {
                                 let mut curr_ptr = curr_rc.borrow_mut();
                                 if let Some(ref pre_rc) = curr_ptr.pre {
-                                    pre_rc.borrow_mut().next = None;
-                                    last_tail = Some(Rc::clone(&pre_rc));
-                                    change_tail = true;
+                                    if let Some(i_pre_rc) = pre_rc.upgrade() {
+                                        i_pre_rc.borrow_mut().next = None;
+                                        last_tail = Some(Rc::clone(&i_pre_rc));
+                                        change_tail = true;
+                                    }
                                 }
                                 curr_ptr.next = None;
                                 curr_ptr.pre = None;
@@ -206,15 +247,20 @@ impl LruCache {
                                 let pre = &curr_ptr.pre;
                                 let next = &curr_ptr.next;
                                 if let Some(ref pre_rc) = *pre {
-                                    if let Some(ref next_rc) = *next {
-                                        pre_rc.borrow_mut().next = Some(Rc::clone(&next_rc));
-                                    } else {
-                                        pre_rc.borrow_mut().next = None;
+                                    if let Some(i_pre_rc) = pre_rc.upgrade() {
+                                        if let Some(ref next_rc) = *next {
+                                            i_pre_rc.borrow_mut().next = Some(Rc::clone(&next_rc));
+                                        } else {
+                                            i_pre_rc.borrow_mut().next = None;
+                                        }
                                     }
                                 }
                                 if let Some(ref next_rc) = *next {
                                     if let Some(ref pre_rc) = *pre {
-                                        next_rc.borrow_mut().pre = Some(Rc::clone(&pre_rc));
+                                        if let Some(i_pre_rc) = pre_rc.upgrade() {
+                                            next_rc.borrow_mut().pre =
+                                                Some(Rc::downgrade(&i_pre_rc));
+                                        }
                                     } else {
                                         next_rc.borrow_mut().pre = None;
                                     }
@@ -226,7 +272,7 @@ impl LruCache {
                         }
 
                         curr_rc.borrow_mut().next = Some(Rc::clone(head_rc));
-                        head_rc.borrow_mut().pre = Some(Rc::clone(curr_rc));
+                        head_rc.borrow_mut().pre = Some(Rc::downgrade(curr_rc));
                         curr_rc.borrow_mut().pre = None;
                     }
                 }
@@ -252,10 +298,10 @@ impl LruCache {
                 None => break,
             }
         }
-        for ref i in self.ref_ary.iter() {
-            println!("ref_count is : {} \n", Rc::strong_count(&i));
-            drop(i);
-            println!("ref_count is : {} \n", Rc::strong_count(&i));
-        }
+        // for ref i in self.ref_ary.iter() {
+        //     println!("ref_count is : {} \n", Rc::strong_count(&i));
+        //     drop(i);
+        //     println!("ref_count is : {} \n", Rc::strong_count(&i));
+        // }
     }
 }
