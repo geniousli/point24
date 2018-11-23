@@ -1,6 +1,6 @@
 below is a simple lru code in rust & go
 
-rust code 
+#### rust code 
 
 ```rust
 use std::collections::HashMap;
@@ -175,7 +175,7 @@ impl LruCache {
     }
 }
 ```
-
+#### Go code
 ```go
 
 package main
