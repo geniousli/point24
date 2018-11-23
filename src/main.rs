@@ -6,146 +6,15 @@ use std::rc::Weak;
 use std::str::FromStr;
 use std::{thread, time};
 fn main() {
-    // let nums: Vec<i64> = std::env::args()
-    //     .skip(1)
-    //     .map(|x| i64::from_str(x.as_str()).unwrap())
-    //     .collect();
-
-    // let res: Vec<_> = nums.iter()
-    //     .enumerate()
-    //     .filter(|(index, _)| index != 0)
-    //     .map(|(index, data)| data)
-    //     .collect();
-    // for x in res {
-    //     println!("{:?}", x);
-    // }
-
-    // let seq = Vec::new();
-    // point_24(nums, seq);
-    let mut lru = LruCache::init(2);
+    let mut lru = LruCache::init(10);
     for i in 0..10 {
         lru.put(i, i);
     }
-
-    for i in 0..100 {
-        lru.put(i, i);
+    let mut time = 0;
+    while time < 100000 {
+        lru.put(time, time);
+        time += 1;
     }
-
-    // let ten_millis = time::Duration::from_millis(1000);
-    // for i in 2..10 {
-    //     // println!("------------------");
-    //     lru.put(i, i);
-    //     // thread::sleep(ten_millis);
-    lru.print();
-    // }
-    // let mut one = Rc::new(RefCell::new(Box::new(LinkNode {
-    //     key: 1,
-    //     val: 1,
-    //     next: None,
-    //     pre: None,
-    // })));
-
-    // {
-    //     let mut two = Rc::new(RefCell::new(Box::new(LinkNode {
-    //         key: 2,
-    //         val: 2,
-    //         next: None,
-    //         pre: None,
-    //     })));
-    //     println!(
-    //         "one strong_count: {}, two string_count: {}",
-    //         Rc::strong_count(&one),
-    //         Rc::strong_count(&two),
-    //     );
-    //     one.borrow_mut().next = Some(Rc::downgrade(&two));
-    //     two.borrow_mut().pre = Some(Rc::clone(&one));
-
-    //     println!(
-    //         "one strong_count: {}, two string_count: {}",
-    //         Rc::strong_count(&one),
-    //         Rc::strong_count(&two),
-    //     );
-    //     // two.borrow_mut().pre = None;
-    //     one.borrow_mut().next = None;
-    //     println!(
-    //         "one strong_count: {}, two string_count: {}",
-    //         Rc::strong_count(&one),
-    //         Rc::strong_count(&two),
-    //     );
-    // }
-    // println!("one strong_count: {}", Rc::strong_count(&one),);
-    // println!("-------------------");
-}
-
-// fn point_24(ary: Vec<i64>, seq: Vec<String>) -> bool {
-//     if ary.len() == 2 {
-//         let one = ary[0];
-//         let two = ary[1];
-//         let result = try_combine_to_24(one, two);
-//         let re = result.iter().find(|&data| data.0 == 24);
-//         match re {
-//             Some(&data) => {
-//                 println!("data is {:?}", data.1);
-//                 true
-//             }
-//             _ => false,
-//         }
-//     } else if ary.len() <= 1 {
-//         return false;
-//     } else {
-//         let re = ary.iter().enumerate().find(|&enum1| {
-//             let one_i = enum1.0;
-//             let one = enum1.1.clone();
-//             let remain = ary.iter()
-//                 .enumerate()
-//                 .filter(|&data| data.0 != one_i)
-//                 .map(|(_, val)| val.clone())
-//                 .collect::<Vec<i64>>();
-//             match remain.iter().enumerate().find(|&data| {
-//                 let two_i = data.0;
-//                 let two = data.1.clone();
-
-//                 let combine = try_combine_to_24(one, two);
-//                 let last = remain
-//                     .iter()
-//                     .enumerate()
-//                     .filter(|&data| data.0 != two_i)
-//                     .map(|(_, val)| val.clone())
-//                     .collect::<Vec<i64>>();
-//                 match combine.iter().find(|&data| {
-//                     let para = last.clone();
-//                     para.push(data.0);
-//                     let i_seq = seq.clone();
-//                     i_seq.push(data.1);
-//                     point_24(para, i_seq)
-//                 }) {
-//                     Some(_) => true,
-//                     _ => false,
-//                 }
-//             }) {
-//                 Some(_) => true,
-//                 _ => false,
-//             }
-//         });
-//         match re {
-//             Some(_) => true,
-//             _ => false,
-//         }
-//     }
-// }
-
-fn try_combine_to_24(one: i64, two: i64) -> Vec<(i64, String)> {
-    let mut ary = Vec::new();
-    ary.push((one + two, format!("{}+{}", one, two)));
-    ary.push((one - two, format!("{}-{}", one, two)));
-    ary.push((two - one, format!("{}-{}", two, one)));
-    ary.push((one * two, format!("{}*{}", one, two)));
-    if one > two && two != 0 && one % two == 0 {
-        ary.push((one / two, format!("{}/{}", one, two)));
-    } else if two > one && one != 0 && two % one == 0 {
-        ary.push((two / one, format!("{}/{}", two, one)));
-    }
-    ary
 }
 
 #[derive(Debug)]
@@ -168,7 +37,6 @@ struct LruCache {
     tail: Option<Rc<RefCell<Box<LinkNode>>>>,
     cache: HashMap<i64, Rc<RefCell<Box<LinkNode>>>>,
     cap: i64,
-    // ref_ary: Vec<Rc<RefCell<Box<LinkNode>>>>,
 }
 
 impl LruCache {
@@ -176,9 +44,8 @@ impl LruCache {
         LruCache {
             head: None,
             tail: None,
-            cache: HashMap::new(),
+            cache: HashMap::with_capacity((cap + 1) as usize),
             cap: cap,
-            // ref_ary: Vec::new(),
         }
     }
 
@@ -186,38 +53,45 @@ impl LruCache {
         match self.get(key) {
             Some(data) => {}
             None => {
-                let node = Rc::new(RefCell::new(Box::new(LinkNode {
-                    key: key,
-                    val: val,
-                    next: None,
-                    pre: None,
-                })));
-                // self.ref_ary.push(Rc::clone(&node));
-                if let Some(ref head_rc) = self.head {
-                    head_rc.borrow_mut().pre = Some(Rc::downgrade(&node));
-                    node.borrow_mut().next = Some(Rc::clone(&head_rc));
-                }
-                self.head = Some(Rc::clone(&node));
-
-                if self.tail.is_none() {
-                    self.tail = Some(Rc::clone(&node));
-                }
-                self.cache.insert(key, Rc::clone(&node));
-                if self.cache.len() as i64 > self.cap {
-                    let mut last_tail = None;
+                if self.cache.len() as i64 <= self.cap - 1 {
+                    let node = Rc::new(RefCell::new(Box::new(LinkNode {
+                        key: key,
+                        val: val,
+                        next: None,
+                        pre: None,
+                    })));
+                    if let Some(ref head_rc) = self.head {
+                        head_rc.borrow_mut().pre = Some(Rc::downgrade(&node));
+                        node.borrow_mut().next = Some(Rc::clone(&head_rc));
+                    }
+                    self.head = Some(Rc::clone(&node));
+                    if self.tail.is_none() {
+                        self.tail = Some(Rc::clone(&node));
+                    }
+                    self.cache.insert(key, Rc::clone(&node));
+                } else {
+                    let mut new_tail = None;
                     if let Some(ref tail_rc) = self.tail {
-                        if let Some(ref pre_tail_rc) = tail_rc.borrow_mut().pre {
-                            if let Some(i_pre_tail_rc) = pre_tail_rc.upgrade() {
-                                i_pre_tail_rc.borrow_mut().next = None;
-                                last_tail = Some(Rc::clone(&i_pre_tail_rc));
+                        let mut i_tail_rc = tail_rc.borrow_mut();
+                        let old_key = i_tail_rc.key;
+                        i_tail_rc.key = key;
+                        i_tail_rc.val = val;
+                        self.cache.remove(&old_key);
+                        self.cache.insert(key, Rc::clone(&tail_rc));
+                        if let Some(ref head_rc) = self.head {
+                            i_tail_rc.next = Some(Rc::clone(&head_rc));
+                            head_rc.borrow_mut().pre = Some(Rc::downgrade(&tail_rc));
+                        }
+                        self.head = Some(Rc::clone(&tail_rc));
+                        if let Some(ref pre_weak) = i_tail_rc.pre {
+                            if let Some(ref pre_rc) = pre_weak.upgrade() {
+                                pre_rc.borrow_mut().next = None;
+                                new_tail = Some(Rc::clone(&pre_rc));
                             }
                         }
-                        tail_rc.borrow_mut().next = None;
-                        tail_rc.borrow_mut().pre = None;
-                        drop(tail_rc);
-                        self.cache.remove(&tail_rc.borrow_mut().val);
+                        i_tail_rc.pre = None;
                     }
-                    self.tail = last_tail;
+                    self.tail = new_tail;
                 }
             }
         }
@@ -232,7 +106,7 @@ impl LruCache {
                         let mut last_tail = None;
                         if let Some(ref tail_rc) = self.tail {
                             if Rc::ptr_eq(&tail_rc, curr_rc) {
-                                let mut curr_ptr = curr_rc.borrow_mut();
+                                let curr_ptr = curr_rc.borrow_mut();
                                 if let Some(ref pre_rc) = curr_ptr.pre {
                                     if let Some(i_pre_rc) = pre_rc.upgrade() {
                                         i_pre_rc.borrow_mut().next = None;
@@ -240,8 +114,6 @@ impl LruCache {
                                         change_tail = true;
                                     }
                                 }
-                                curr_ptr.next = None;
-                                curr_ptr.pre = None;
                             } else {
                                 let curr_ptr = curr_rc.borrow_mut();
                                 let pre = &curr_ptr.pre;
@@ -254,15 +126,9 @@ impl LruCache {
                                             i_pre_rc.borrow_mut().next = None;
                                         }
                                     }
-                                }
-                                if let Some(ref next_rc) = *next {
-                                    if let Some(ref pre_rc) = *pre {
-                                        if let Some(i_pre_rc) = pre_rc.upgrade() {
-                                            next_rc.borrow_mut().pre =
-                                                Some(Rc::downgrade(&i_pre_rc));
-                                        }
-                                    } else {
-                                        next_rc.borrow_mut().pre = None;
+                                } else {
+                                    if let Some(ref next_rc) = *next {
+                                        next_rc.borrow_mut().next = None;
                                     }
                                 }
                             }
@@ -277,7 +143,7 @@ impl LruCache {
                     }
                 }
                 self.head = Some(Rc::clone(&curr_rc));
-                Some(Rc::clone(&curr_rc))
+                self.head.clone()
             }
             None => None,
         }
@@ -298,10 +164,5 @@ impl LruCache {
                 None => break,
             }
         }
-        // for ref i in self.ref_ary.iter() {
-        //     println!("ref_count is : {} \n", Rc::strong_count(&i));
-        //     drop(i);
-        //     println!("ref_count is : {} \n", Rc::strong_count(&i));
-        // }
     }
 }
