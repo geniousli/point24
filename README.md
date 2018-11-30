@@ -1,3 +1,7 @@
+point 24 aimed to resolve the 24 point problem. and had implment Iterator trait to make a lazy value, so can use find to get the first value. 
+
+
+
 below is a simple lru code in rust & go
 
 #### rust code 
