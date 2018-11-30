@@ -27,17 +27,11 @@ fn main() {
         vec: nums,
         combiner: 0,
     };
-    // println!("xxxx is : {:?}", iter);
-    // let res = iter.find(|one| {
-    //     (*one).find(|&two| two.find(|&three| three.vec[0] == 24).is_some())
-    //         .is_some()
-    // });
     for i in iter {
         for y in i {
             for x in y {
                 if x.vec[0] == 24 {
                     println!("{:?}", x);
-                    // return;
                 }
             }
         }
@@ -149,8 +143,8 @@ impl SelfIter {
                 let new_sql = format!("{}, {}", self.seq.as_str(), sql);
                 vec.push(data);
                 Some(SelfIter {
-                    x: self.x,
-                    y: self.y,
+                    x: 0,
+                    y: 0,
                     vec: vec,
                     seq: new_sql,
                     combiner: 0,
