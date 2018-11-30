@@ -37,11 +37,13 @@ fn main() {
             for x in y {
                 if x.vec[0] == 24 {
                     println!("{:?}", x);
-                    return;
+                    // return;
                 }
             }
         }
     }
+
+    // iter.find(|x| x.find(|y| y.find(|z| z.vec[0] == 24).is_some()).is_some());
     // println!("res is --- {:?}", res);
 
     // point_24(nums, String::from(""));
@@ -105,18 +107,30 @@ impl SelfIter {
             .map(|(_, val)| val.clone())
             .collect::<Vec<i64>>();
         let new_val = match self.combiner {
-            0 => Some((
-                self.vec[self.x] + self.vec[self.y],
-                format!("{}+{}", self.vec[self.x], self.vec[self.y]),
-            )),
+            0 => {
+                if self.y < self.x {
+                    None
+                } else {
+                    Some((
+                        self.vec[self.x] + self.vec[self.y],
+                        format!("{}+{}", self.vec[self.x], self.vec[self.y]),
+                    ))
+                }
+            }
             1 => Some((
                 self.vec[self.x] - self.vec[self.y],
                 format!("{}-{}", self.vec[self.x], self.vec[self.y]),
             )),
-            2 => Some((
-                self.vec[self.x] * self.vec[self.y],
-                format!("{}*{}", self.vec[self.x], self.vec[self.y]),
-            )),
+            2 => {
+                if self.y < self.x {
+                    None
+                } else {
+                    Some((
+                        self.vec[self.x] * self.vec[self.y],
+                        format!("{}*{}", self.vec[self.x], self.vec[self.y]),
+                    ))
+                }
+            }
             3 => {
                 if self.vec[self.y] != 0 && self.vec[self.x] % self.vec[self.y] == 0 {
                     Some((
