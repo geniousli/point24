@@ -1,5 +1,5 @@
 extern crate point24;
-use point24::algorithm::{heap, lru};
+use point24::algorithm::{heap, lru, middle_number, most_long_str, most_water, receive_water};
 use point24::problem;
 
 fn main() {
@@ -18,4 +18,35 @@ fn main() {
     //     cache.put(i, i);
     // }
     // cache.print();
+    // let string = "abcabcbb".to_string();
+    // let mut value = most_long_str::Solution::length_of_longest_substring(string);
+    // println!("value is--- {}", value);
+    // let string2 = "dvdfd".to_string();
+    // value = most_long_str::Solution::length_of_longest_substring(string2);
+    // println!("value is--- {}", value);
+    // let string3 = "abba".to_string();
+    // value = most_long_str::Solution::length_of_longest_substring(string3);
+    // println!("str:  value is--- {}", value);
+    // let string4 = "rggtlnpgkqksefchmdaqyhdnatpwbtytbho".to_string();
+    // value = most_long_str::Solution::length_of_longest_substring(string4);
+    // println!("str:  value is--- {}", value);
+
+    // let num1 = vec![1, 3];
+    // let num2 = vec![2];
+    // let mut value = middle_number::Solution::find_median_sorted_arrays(num1, num2);
+    // println!("str:  value is--- {}", value);
+    // let nums1 = vec![1, 2];
+    // let nums2 = vec![3, 4];
+    // let value = middle_number::Solution::find_median_sorted_arrays(nums1, nums2);
+    // println!("str:  value is--- {}", value);
+    // let nums1 = vec![];
+    // let nums2 = vec![1, 2, 3, 4];
+    // let value = middle_number::Solution::find_median_sorted_arrays(nums1, nums2);
+    // println!("str:  value is--- {}", value);
+    // let ary = vec![1, 8, 6, 2, 5, 4, 8, 3, 7];
+    // let value = most_water::Solution::max_area(ary);
+    // println!("str:  value is--- {}", value);
+    let ary = vec![0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
+    let value = receive_water::Solution::trap(ary);
+    println!("str:  value is--- {}", value);
 }
