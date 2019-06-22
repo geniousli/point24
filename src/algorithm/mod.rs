@@ -1,7 +1,11 @@
 pub mod add_two_number;
+pub mod best_time_to_buy_and_sell_stock;
+pub mod find_first_and_last_position_of_element_in_sorted_array;
 pub mod heap;
 pub mod lru;
 pub mod middle_number;
 pub mod most_long_str;
 pub mod most_water;
 pub mod receive_water;
+pub mod search_in_rotated_sorted_array;
+pub mod permutation_sequence;

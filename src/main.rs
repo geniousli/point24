@@ -1,5 +1,8 @@
 extern crate point24;
-use point24::algorithm::{heap, lru, middle_number, most_long_str, most_water, receive_water};
+use point24::algorithm::{
+    best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array,
+};
 use point24::problem;
 
 fn main() {
@@ -46,7 +49,8 @@ fn main() {
     // let ary = vec![1, 8, 6, 2, 5, 4, 8, 3, 7];
     // let value = most_water::Solution::max_area(ary);
     // println!("str:  value is--- {}", value);
-    let ary = vec![0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
-    let value = receive_water::Solution::trap(ary);
-    println!("str:  value is--- {}", value);
+    let ary = vec![1];
+    let value =
+        find_first_and_last_position_of_element_in_sorted_array::Solution::search_range(ary, 1);
+    println!("str:  value is--- {:?}", value);
 }
