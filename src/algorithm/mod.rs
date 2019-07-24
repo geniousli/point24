@@ -9,3 +9,6 @@ pub mod most_water;
 pub mod receive_water;
 pub mod search_in_rotated_sorted_array;
 pub mod permutation_sequence;
+pub mod rotate_list;
+pub mod implement_trie_prefix_tree;
+pub mod submissions;

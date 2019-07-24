@@ -1,7 +1,7 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array,
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions,
 };
 use point24::problem;
 
@@ -49,8 +49,38 @@ fn main() {
     // let ary = vec![1, 8, 6, 2, 5, 4, 8, 3, 7];
     // let value = most_water::Solution::max_area(ary);
     // println!("str:  value is--- {}", value);
-    let ary = vec![1];
-    let value =
-        find_first_and_last_position_of_element_in_sorted_array::Solution::search_range(ary, 1);
-    println!("str:  value is--- {:?}", value);
+    // let ary = vec![1];
+    // let value =
+    //     find_first_and_last_position_of_element_in_sorted_array::Solution::search_range(ary, 1);
+    // println!("str:  value is--- {:?}", value);
+    // let mut root = implement_trie_prefix_tree::Trie::new();
+    // root.insert("lishaohua".to_string());
+
+    // println!("xxxx {:?}", root);
+
+
+    // let res = root.search("lishaohua".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.search("lishao".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.search("xxx".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.starts_with("li".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.starts_with("lishao".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.starts_with("lishaohuali111".to_string());
+    // println!("result is -----  {:?}", res);
+
+    // let res = root.starts_with("lishaohua".to_string());
+    // println!("result is -----  {:?}", res);
+    let input =  vec![vec![2],vec![3,4],vec![6,5,7],vec![4,1,8,3]];
+    let value = submissions::Solution::minimum_total(input);
+    println!("value is ---- {}", value);
+
 }
