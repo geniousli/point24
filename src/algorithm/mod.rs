@@ -12,3 +12,5 @@ pub mod permutation_sequence;
 pub mod rotate_list;
 pub mod implement_trie_prefix_tree;
 pub mod submissions;
+pub mod house_robber;
+pub mod house_robber_ii;
