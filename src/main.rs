@@ -1,7 +1,7 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams,
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals
 };
 use point24::problem;
 
@@ -84,8 +84,11 @@ fn main() {
     // println!("value is ---- {}", value);
     // let re = house_robber_ii::Solution::rob(vec![1,2,3,1]);
     // println!("resi s----- {}", re);
-    let mut  problems =  vec![];
-    problems.push(String::from("xxx"));
-    problems.push(String::from("1111"));
-    group_anagrams::Solution::group_anagrams(problems);
+    // let mut  problems =  vec![];
+    // problems.push(String::from("xxx"));
+    // problems.push(String::from("1111"));
+    let ary = vec![vec![1,3], vec![2,6], vec![8,10], vec![15,18]];
+    let result = merge_intervals::Solution::merge(ary);
+    println!("merge is------ {:?}", result);
+
 }
