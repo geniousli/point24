@@ -1,7 +1,7 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path,
 };
 use point24::problem;
 
@@ -87,8 +87,14 @@ fn main() {
     // let mut  problems =  vec![];
     // problems.push(String::from("xxx"));
     // problems.push(String::from("1111"));
-    let ary = vec![vec![1,3], vec![2,6], vec![8,10], vec![15,18]];
-    let result = merge_intervals::Solution::merge(ary);
-    println!("merge is------ {:?}", result);
+    // let ary = vec![vec![1,3], vec![2,6], vec![8,10], vec![15,18]];
+    // let result = merge_intervals::Solution::merge(ary);
+    // println!("merge is------ {:?}", result);
+    // let mut ary = vec![2];
+    // sort_colors::Solution::sort_colors(&mut ary);
+    // println!("ary: {:?}", ary);
+    let string = String::from("//b/../../c/");
 
+    let r_str = simplify_path::Solution::simplify_path(string);
+    println!("------ {}", r_str);
 }

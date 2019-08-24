@@ -18,3 +18,5 @@ pub mod house_robber_iii;
 pub mod group_anagrams;
 pub mod merge_intervals;
 pub mod rotate_image;
+pub mod sort_colors;
+pub mod simplify_path;
