@@ -1,9 +1,39 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path,
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i
 };
 use point24::problem;
+
+struct Person<T> {
+    name: T,
+    age: i32,
+}
+
+impl<T> Person<T> {
+    fn say() {
+        println!("person -------");
+    }
+}
+
+impl Person<String> {
+    fn say_name() {
+        println!("string -------");
+    }
+}
+
+
+// fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
+//     let mut largest = list[0];
+
+//     for &item in list.iter() {
+//         if item > largest {
+//             largest = item;
+//         }
+//     }
+
+//     largest
+// }
 
 fn main() {
     // let nums: Vec<i64> = std::env::args()
@@ -93,8 +123,10 @@ fn main() {
     // let mut ary = vec![2];
     // sort_colors::Solution::sort_colors(&mut ary);
     // println!("ary: {:?}", ary);
-    let string = String::from("//b/../../c/");
+    // let string = String::from("//b/../../c/");
 
-    let r_str = simplify_path::Solution::simplify_path(string);
-    println!("------ {}", r_str);
+    // let r_str = simplify_path::Solution::simplify_path(string);
+    // println!("------ {}", r_str);
+    let ary = vec![1,4,3,2];
+    array_partition_i::Solution::array_pair_sum(ary);
 }

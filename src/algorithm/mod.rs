@@ -20,3 +20,5 @@ pub mod merge_intervals;
 pub mod rotate_image;
 pub mod sort_colors;
 pub mod simplify_path;
+pub mod advantage_shuffle;
+pub mod array_partition_i;
