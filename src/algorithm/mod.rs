@@ -22,3 +22,4 @@ pub mod sort_colors;
 pub mod simplify_path;
 pub mod advantage_shuffle;
 pub mod array_partition_i;
+pub mod arithmetic_slices;

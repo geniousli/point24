@@ -1,7 +1,7 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i, arithmetic_slices,
 };
 use point24::problem;
 
@@ -127,6 +127,8 @@ fn main() {
 
     // let r_str = simplify_path::Solution::simplify_path(string);
     // println!("------ {}", r_str);
-    let ary = vec![1,4,3,2];
-    array_partition_i::Solution::array_pair_sum(ary);
+    // let ary = vec![1,4,3,2];
+    // array_partition_i::Solution::array_pair_sum(ary);
+    let ary = vec![1,2,3,8,9,10];
+    arithmetic_slices::Solution::number_of_arithmetic_slices(ary);
 }
