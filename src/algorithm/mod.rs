@@ -23,3 +23,6 @@ pub mod simplify_path;
 pub mod advantage_shuffle;
 pub mod array_partition_i;
 pub mod arithmetic_slices;
+pub mod asteroid_collision;
+pub mod middle_of_the_linked_list;
+pub mod fraction_to_recurring_decimal;
