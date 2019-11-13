@@ -1,7 +1,7 @@
 extern crate point24;
 use point24::algorithm::{
     best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i, arithmetic_slices, asteroid_collision, middle_of_the_linked_list, fraction_to_recurring_decimal
+    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i, arithmetic_slices, asteroid_collision, middle_of_the_linked_list, fraction_to_recurring_decimal, zigzag_conversion,
 };
 use point24::problem;
 
@@ -135,6 +135,10 @@ fn main() {
     // let ary = vec![8, -8];
     // let result = asteroid_collision::Solution::asteroid_collision(ary);
     // println!("result: {:?}", result);
-    let ary = fraction_to_recurring_decimal::Solution::fraction_to_decimal(-1, -2147483648);
-    println!("ary: {}", ary);
+    // let ary = fraction_to_recurring_decimal::Solution::fraction_to_decimal(-1, -2147483648);
+    // println!("ary: {}", ary);
+
+    let s = String::from("LEETCODEISHIRING");
+    let result = zigzag_conversion::Solution::convert(s, 4);
+    println!("result --- {}", result);
 }
