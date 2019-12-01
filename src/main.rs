@@ -1,7 +1,11 @@
 extern crate point24;
 use point24::algorithm::{
-    best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array, heap,
-    lru, middle_number, most_long_str, most_water, receive_water, search_in_rotated_sorted_array, implement_trie_prefix_tree, submissions, house_robber, house_robber_ii,group_anagrams, merge_intervals, sort_colors, simplify_path, advantage_shuffle, array_partition_i, arithmetic_slices, asteroid_collision, middle_of_the_linked_list, fraction_to_recurring_decimal, zigzag_conversion,
+    advantage_shuffle, arithmetic_slices, array_partition_i, asteroid_collision,
+    best_time_to_buy_and_sell_stock, find_first_and_last_position_of_element_in_sorted_array,
+    fraction_to_recurring_decimal, group_anagrams, heap, house_robber, house_robber_ii,
+    implement_trie_prefix_tree, lru, merge_intervals, middle_number, middle_of_the_linked_list,
+    most_long_str, most_water, receive_water, search_in_rotated_sorted_array, simplify_path,
+    sort_colors, submissions, word_search, zigzag_conversion,
 };
 use point24::problem;
 
@@ -21,7 +25,6 @@ impl Person<String> {
         println!("string -------");
     }
 }
-
 
 // fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
 //     let mut largest = list[0];
@@ -88,7 +91,6 @@ fn main() {
 
     // println!("xxxx {:?}", root);
 
-
     // let res = root.search("lishaohua".to_string());
     // println!("result is -----  {:?}", res);
 
@@ -138,7 +140,33 @@ fn main() {
     // let ary = fraction_to_recurring_decimal::Solution::fraction_to_decimal(-1, -2147483648);
     // println!("ary: {}", ary);
 
-    let s = String::from("LEETCODEISHIRING");
-    let result = zigzag_conversion::Solution::convert(s, 4);
-    println!("result --- {}", result);
+    // let s = String::from("LEETCODEISHIRING");
+    // let result = zigzag_conversion::Solution::convert(s, 4);
+    // println!("result --- {}", result);
+    // let mut board = vec![
+    //     vec!['A', 'B', 'C', 'E'],
+    //     vec!['S', 'F', 'C', 'S'],
+    //     vec!['A', 'D', 'E', 'E'],
+    // ];
+    // let word = "ABCCED";
+    // let result = word_search::Solution::exist(board, word.to_string());
+    // println!("result: #{}", result);
+
+    // let board = vec![
+    //     vec!['A', 'B', 'C', 'E'],
+    //     vec!['S', 'F', 'E', 'S'],
+    //     vec!['A', 'D', 'E', 'E'],
+    // ];
+    //, "ABCESEEEFS")
+    // let word = "ABCESEEEFS";
+    // let result = word_search::Solution::exist(board, word.to_string());
+    // println!("result: #{}", result);
+    let board = vec![
+        vec!['a', 'b'],
+        vec!['c', 'd']
+    ];
+    let word = "cdba";
+    let result = word_search::Solution::exist(board, word.to_string());
+    println!("result: #{}", result);
+
 }
