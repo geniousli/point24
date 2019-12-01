@@ -5,7 +5,7 @@ use point24::algorithm::{
     fraction_to_recurring_decimal, group_anagrams, heap, house_robber, house_robber_ii,
     implement_trie_prefix_tree, lru, merge_intervals, middle_number, middle_of_the_linked_list,
     most_long_str, most_water, receive_water, search_in_rotated_sorted_array, simplify_path,
-    sort_colors, submissions, word_search, zigzag_conversion,
+    sort_colors, submissions, word_search, word_search_ii, zigzag_conversion,
 };
 use point24::problem;
 
@@ -161,12 +161,25 @@ fn main() {
     // let word = "ABCESEEEFS";
     // let result = word_search::Solution::exist(board, word.to_string());
     // println!("result: #{}", result);
-    let board = vec![
-        vec!['a', 'b'],
-        vec!['c', 'd']
-    ];
-    let word = "cdba";
-    let result = word_search::Solution::exist(board, word.to_string());
-    println!("result: #{}", result);
+    // let board = vec![
+    //     vec!['a', 'b'],
+    //     vec!['c', 'd']
+    // ];
+    // let word = "cdba";
+    // let result = word_search::Solution::exist(board, word.to_string());
+    // println!("result: #{}", result);
 
+    let mut board = vec![
+        // vec!['o', 'a', 'a', 'n'],
+        // vec!['e', 't', 'a', 'e'],
+        // vec!['i', 'h', 'k', 'r'],
+        // vec!['i', 'f', 'l', 'v'],
+        vec!['a', 'b'],
+        vec!['a', 'a'],
+    ];
+    // let mut strs = vec!["aba","baa","bab","aaab","aaa","aaaa","aaba"];
+    let mut strs = vec!["aaab", "aaa"];
+    let words: Vec<String> = strs.iter().map(|&item| item.to_string()).collect();
+    let res = word_search_ii::Solution::find_words(board, words);
+    println!("res: #{:?}", res);
 }

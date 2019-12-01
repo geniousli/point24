@@ -89,9 +89,8 @@ impl Trie {
         }else {
             self.world = true;
         }
-
-
     }
+
     pub fn search(&self, word: String) -> bool {
         let i_first_word = word.chars().nth(0);
         if let Some(first_word) = i_first_word {
@@ -119,4 +118,5 @@ impl Trie {
             self.world || !self.config.is_empty()
         }
     }
+
 }

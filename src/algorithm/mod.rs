@@ -28,3 +28,4 @@ pub mod middle_of_the_linked_list;
 pub mod fraction_to_recurring_decimal;
 pub mod zigzag_conversion;
 pub mod word_search;
+pub mod word_search_ii;
